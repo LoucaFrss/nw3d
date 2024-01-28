@@ -3,7 +3,7 @@ use core::{
     ops::{Add, AddAssign, Mul, MulAssign, Neg, Sub, SubAssign},
 };
 
-use num_traits::real::Real;
+use num_traits::Float;
 #[derive(Default, Clone, Copy, PartialEq, Debug)]
 pub struct Vec3<T> {
     pub y: T,
@@ -125,12 +125,12 @@ impl<T: Mul<T, Output = T> + Add<T, Output = T>> Mul<Vec3<T>> for Vec3<T> {
     }
 }
 
-impl From<Vec3<f32>> for Vec3<i16> {
+impl From<Vec3<f32>> for Vec3<isize> {
     fn from(value: Vec3<f32>) -> Self {
         Self {
-            x: value.x as i16,
-            y: value.y as i16,
-            z: value.z as i16,
+            x: value.x as isize,
+            y: value.y as isize,
+            z: value.z as isize,
         }
     }
 }

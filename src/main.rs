@@ -9,6 +9,7 @@ pub mod app;
 pub mod eadk;
 pub mod gl;
 pub mod glm;
+// mod mesh;
 
 #[used]
 #[link_section = ".rodata.eadk_app_name"]

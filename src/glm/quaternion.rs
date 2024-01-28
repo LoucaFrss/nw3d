@@ -1,10 +1,17 @@
+// not used right now cause still don't know how to add rotation with quaternions
+// TODO: know how to add rotation with quaternions if useful,
+// rotation interpolation useless right now, maybe perf?
+
+//https://www.haroldserrano.com/blog/developing-a-math-engine-in-c-implementing-quaternions carried this
+
 use super::Vec3;
 use core::ops::{Add, Mul, Sub};
 use num_traits::Float;
 
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Quaternion {
-    s: f32,
-    v: Vec3<f32>,
+    pub s: f32,
+    pub v: Vec3<f32>,
 }
 
 impl Quaternion {

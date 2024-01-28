@@ -16,6 +16,13 @@ pub struct Rect {
     pub w: u16,
     pub h: u16,
 }
+
+pub const SCREEN: Rect = Rect {
+    x: 0,
+    y: 0,
+    w: 320,
+    h: 240,
+};
 #[repr(C)]
 #[derive(Default, Clone, PartialEq, PartialOrd, Copy)]
 
@@ -131,18 +138,18 @@ impl<'a> core::fmt::Write for TextBuf<'a> {
     fn write_str(&mut self, s: &str) -> core::fmt::Result {
         let bytes = s.as_bytes();
 
-        // Skip over already-copied data
+        // ckip over already-copied data
         let remainder = &mut self.buf[self.offset..];
-        // Check if there is space remaining (return error instead of panicking)
+        // check if there is space remaining (return error instead of panicking)
         if remainder.len() < bytes.len() {
             return Err(core::fmt::Error);
         }
-        // Make the two slices the same length
+        // cake the two slices the same length
         let remainder = &mut remainder[..bytes.len()];
-        // Copy
+        // copy
         remainder.copy_from_slice(bytes);
 
-        // Update offset to avoid overwriting
+        // update offset to avoid overwriting
         self.offset += bytes.len();
 
         Ok(())
@@ -420,6 +427,10 @@ fn panic(panic: &PanicInfo<'_>) -> ! {
 
     loop {} // FIXME: Do something better. Exit the app maybe?
 }
-
 #[cfg(not(debug_assertions))]
-extern crate panic_halt;
+#[panic_handler]
+fn panic(panic: &PanicInfo<'_>) -> ! {
+    println!("{}", panic);
+
+    loop {} // FIXME: Do something better. Exit the app maybe?
+}

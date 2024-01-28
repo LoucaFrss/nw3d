@@ -1,3 +1,5 @@
+// could be useful with quaternions
+
 use core::ops::{Add, Div, Mul, Sub};
 use num_traits::Float;
 pub struct Complex {
