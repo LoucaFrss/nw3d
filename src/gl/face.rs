@@ -12,3 +12,7 @@ impl Face {
         Self { a, b, c, material }
     }
 }
+
+pub fn face(a: u16, b: u16, c: u16, material: u8) -> Face {
+    Face { a, b, c, material }
+}

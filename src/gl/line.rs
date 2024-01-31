@@ -1,12 +1,14 @@
 use core::mem::swap;
 
-use crate::glm::Vec3;
+use crate::{eadk::Color, glm::Vec3};
 // Bresenham algorithm
+#[inline]
+
 pub fn line(
-    mut a: Vec3<isize>,
-    mut b: Vec3<isize>,
-    framebuffer: &mut [u16; 320 * 240],
-    color: u16,
+    mut a: Vec3<i16>,
+    mut b: Vec3<i16>,
+    framebuffer: &mut [Color; 320 * 240],
+    color: Color,
 ) {
     let steep = (a.x - b.x).abs() < (a.y - b.y).abs();
     if steep {

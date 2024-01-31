@@ -1,5 +1,14 @@
 use crate::TextBuf;
-pub type Color = u16;
+#[derive(Clone, Copy, PartialEq, PartialOrd, Eq, Ord)]
+#[repr(C)]
+#[derive(Debug)]
+pub struct Color(pub u16);
+#[inline]
+
+pub const fn rgb(r: u16, g: u16, b: u16) -> Color {
+    Color(((r & 0b11111000) << 8) + ((g & 0b11111100) << 3) + (b >> 3))
+}
+
 #[macro_export]
 macro_rules! rgb {
     ($r: expr, $g: expr, $b: expr) => {
@@ -160,9 +169,9 @@ macro_rules! println {
     ($($arg:expr),*) => {
 {
     use ::core::fmt::Write;
-    let mut buf  =crate::TextBuf::new(unsafe {&mut $crate::TEXT_BUFFER});
+    let mut buf = $crate::TextBuf::new(unsafe {&mut $crate::TEXT_BUFFER});
     write!(buf, $($arg),*).unwrap();
-    $crate::eadk::display::draw_string(unsafe {&$crate::TEXT_BUFFER[..buf.offset]}, $crate::eadk::Point{x: 0, y:0}, false, 0, u16::MAX);
+    $crate::eadk::display::draw_string(unsafe {&$crate::TEXT_BUFFER[..buf.offset]}, $crate::eadk::Point{x: 0, y:0}, false, Color(0), Color(u16::MAX));
 }
     };
 }

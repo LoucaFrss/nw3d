@@ -1,11 +1,13 @@
+use crate::eadk::Color;
+
 // for now materials are only colors, pbr could be great but probably expensive cause of float ops
 #[derive(Debug)]
 pub struct Material {
-    pub color: u16,
+    pub color: Color,
 }
 
 impl Material {
-    pub fn new(color: u16) -> Self {
+    pub fn new(color: Color) -> Self {
         Self { color }
     }
 }

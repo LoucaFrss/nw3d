@@ -13,6 +13,7 @@ name = "epsilon-sample-app"
 version = "0.1.0"
 dependencies = [
  "num-traits",
+ "obj",
  "rgb565",
 ]
 
@@ -31,6 +32,12 @@ dependencies = [
  "autocfg",
  "libm",
 ]
+
+[[package]]
+name = "obj"
+version = "0.10.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "059c95245738cdc7b40078cdd51a23200252a4c0a0a6dd005136152b3f467a4a"
 
 [[package]]
 name = "rgb565"

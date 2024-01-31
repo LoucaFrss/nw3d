@@ -70,7 +70,7 @@ impl Quaternion {
         }
         let norm = 1. / self.norm();
         self.s *= norm;
-        self.v = self.v * norm;
+        self.v *= norm;
     }
     pub fn conjugate(&self) -> Quaternion {
         Quaternion {

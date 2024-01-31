@@ -1,14 +1,22 @@
 use core::{
     convert::TryInto,
+    fmt::Debug,
     ops::{Add, AddAssign, Mul, MulAssign, Neg, Sub, SubAssign},
 };
 
 use num_traits::Float;
-#[derive(Default, Clone, Copy, PartialEq, Debug)]
+#[derive(Default, Clone, Copy, PartialEq)]
+
 pub struct Vec3<T> {
     pub y: T,
     pub x: T,
     pub z: T,
+}
+
+impl<T: Debug> Debug for Vec3<T> {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        write!(f, "vec3({:?}, {:?}, {:?})", self.x, self.y, self.z)
+    }
 }
 
 pub type Vertex<T> = Vec3<T>;
@@ -19,7 +27,7 @@ impl<T> Vec3<T> {
     }
 }
 
-pub fn vec3<T>(x: T, y: T, z: T) -> Vec3<T> {
+pub const fn vec3<T>(x: T, y: T, z: T) -> Vec3<T> {
     Vec3 { x, y, z }
 }
 impl Vec3<f32> {
@@ -125,12 +133,21 @@ impl<T: Mul<T, Output = T> + Add<T, Output = T>> Mul<Vec3<T>> for Vec3<T> {
     }
 }
 
-impl From<Vec3<f32>> for Vec3<isize> {
+impl From<Vec3<f32>> for Vec3<i16> {
     fn from(value: Vec3<f32>) -> Self {
         Self {
-            x: value.x as isize,
-            y: value.y as isize,
-            z: value.z as isize,
+            x: value.x as i16,
+            y: value.y as i16,
+            z: value.z as i16,
+        }
+    }
+}
+impl From<Vec3<i16>> for Vec3<f32> {
+    fn from(value: Vec3<i16>) -> Self {
+        Self {
+            x: value.x.into(),
+            y: value.y.into(),
+            z: value.z.into(),
         }
     }
 }
