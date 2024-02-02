@@ -3,6 +3,16 @@ use crate::TextBuf;
 #[repr(C)]
 #[derive(Debug)]
 pub struct Color(pub u16);
+impl Color {
+    pub const BLACK: Color = rgb(0, 0, 0);
+    pub const WHITE: Color = rgb(255, 255, 255);
+    pub const RED: Color = rgb(255, 0, 0);
+    pub const GREEN: Color = rgb(0, 255, 0);
+    pub const BLUE: Color = rgb(0, 0, 255);
+    pub const CYAN: Color = rgb(255, 255, 0);
+    pub const YELLOW: Color = rgb(0, 255, 255);
+    pub const MAGENTA: Color = rgb(255, 0, 255);
+}
 #[inline]
 
 pub const fn rgb(r: u16, g: u16, b: u16) -> Color {

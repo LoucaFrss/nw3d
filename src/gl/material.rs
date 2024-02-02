@@ -1,13 +1,13 @@
-use crate::eadk::Color;
+use crate::glm::Vec3;
 
 // for now materials are only colors, pbr could be great but probably expensive cause of float ops
 #[derive(Debug)]
 pub struct Material {
-    pub color: Color,
+    pub color: Vec3<f32>,
 }
 
 impl Material {
-    pub fn new(color: Color) -> Self {
+    pub fn new(color: Vec3<f32>) -> Self {
         Self { color }
     }
 }

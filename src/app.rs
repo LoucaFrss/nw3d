@@ -150,17 +150,15 @@ pub fn app(_external_data: &[u8]) {
             if ab.x * ac.y - ac.x * ab.y > 0. {
                 continue;
             }
-            let n = ab.cross(-ac).normalize();
+            let n = ab.cross(ac).normalize();
 
-            let l = n.dot(a.normalize());
-            let [cr, cg, cb] =
-                rgb565::Rgb565::from_rgb565(mesh.materials[face.material as usize].color.0)
-                    .to_rgb888_components();
+            let l = n.dot((-a).normalize());
+            let (cr, cg, cb) = mesh.materials[face.material as usize].color.components();
 
             let color = rgb(
-                ((cr as f32) * l) as u16,
-                ((cg as f32) * l) as u16,
-                ((cb as f32) * l) as u16,
+                (cr * l * 255.) as u16,
+                (cg * l * 255.) as u16,
+                (cb * l * 255.) as u16,
             );
             triangles += 1;
             triangle(a, b, c, &mut fb, color);

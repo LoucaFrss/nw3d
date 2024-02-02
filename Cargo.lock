@@ -14,7 +14,6 @@ version = "0.1.0"
 dependencies = [
  "num-traits",
  "obj",
- "rgb565",
 ]
 
 [[package]]
@@ -38,9 +37,3 @@ name = "obj"
 version = "0.10.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "059c95245738cdc7b40078cdd51a23200252a4c0a0a6dd005136152b3f467a4a"
-
-[[package]]
-name = "rgb565"
-version = "0.1.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6d43e85498d0bb728f77a88b4313eaf4ed21673f3f8a05c36e835cf6c9c0d066"

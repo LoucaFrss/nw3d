@@ -33,11 +33,7 @@ fn main() {
             let kd = material.kd.unwrap_or_default();
             mat_index = materials.len();
             materials.push(Material {
-                color: rgb(
-                    (kd[0] * 255.) as u8,
-                    (kd[1] * 255.) as u8,
-                    (kd[2] * 255.) as u8,
-                ),
+                color: Vec3::new(kd[0], kd[1], kd[2]),
             });
         }
 
@@ -87,7 +83,6 @@ fn main() {
     let cx = i16::MAX as f32 / dx;
     let cy = i16::MAX as f32 / dy;
     let cz = i16::MAX as f32 / dz;
-    write("target/dz.txt", cx.to_string()).unwrap();
     for vertex in vs {
         vertices.push(Vec3::new(
             ((vertex[0] - xmin - dx / 2.) * cx) as i16,
@@ -95,9 +90,9 @@ fn main() {
             ((vertex[2] - zmin - dz / 2.) * cz) as i16,
         ));
     }
-    materials.push(Material {
-        color: Color(u16::MAX),
-    });
+    // materials.push(Material {
+    //     color: Color(u16::MAX),
+    // });
     let mesh = Mesh {
         visible: vec![false; vertices.len()],
         vertices,
@@ -110,9 +105,9 @@ fn main() {
 
     write("target/mesh.rst", format!("{:#?}", mesh)).unwrap();
 }
-const fn rgb(r: u8, g: u8, b: u8) -> Color {
-    Color(((r as u16 & 0b11111000) << 8) + ((g as u16 & 0b11111100) << 3) + (b as u16 >> 3))
-}
+// const fn rgb(r: u8, g: u8, b: u8) -> Color {
+//     Color(((r as u16 & 0b11111000) << 8) + ((g as u16 & 0b11111100) << 3) + (b as u16 >> 3))
+// }
 #[derive(Debug)]
 pub struct Color(pub u16);
 #[derive(Debug)]
@@ -127,7 +122,7 @@ pub struct Mesh {
 }
 #[derive(Debug)]
 pub struct Material {
-    pub color: Color,
+    pub color: Vec3<f32>,
 }
 #[derive(Debug)]
 
@@ -156,6 +151,16 @@ pub type Vertex<T> = Vec3<T>;
 impl<T> Vec3<T> {
     pub fn new(x: T, y: T, z: T) -> Self {
         Self { x, y, z }
+    }
+}
+
+impl<T: Clone> From<[T; 3]> for Vec3<T> {
+    fn from(value: [T; 3]) -> Self {
+        Self {
+            y: value[0].clone(),
+            x: value[1].clone(),
+            z: value[2].clone(),
+        }
     }
 }
 impl Vec3<f32> {

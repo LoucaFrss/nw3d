@@ -13,7 +13,7 @@ pub mod glm;
 
 #[used]
 #[link_section = ".rodata.eadk_app_name"]
-pub static EADK_APP_NAME: [u8; 10] = *b"HelloRust\0";
+pub static EADK_APP_NAME: [u8; 10] = *b"3D Viewer\0";
 
 #[used]
 #[link_section = ".rodata.eadk_api_level"]
@@ -21,7 +21,7 @@ pub static EADK_APP_API_LEVEL: u32 = 0;
 
 #[used]
 #[link_section = ".rodata.eadk_app_icon"]
-pub static EADK_APP_ICON: [u8; 4250] = *include_bytes!("../target/icon.nwi");
+pub static EADK_APP_ICON: [u8; 2849] = *include_bytes!("../target/icon.nwi");
 #[no_mangle]
 pub fn main() {
     app::app(unsafe { core::slice::from_raw_parts(eadk_external_data, eadk_external_data_size) });

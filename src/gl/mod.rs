@@ -1,4 +1,5 @@
 pub mod camera;
+pub mod light;
 pub use camera::*;
 
 pub mod face;

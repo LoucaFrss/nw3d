@@ -1,7 +1,7 @@
 use core::{
     convert::TryInto,
     fmt::Debug,
-    ops::{Add, AddAssign, Mul, MulAssign, Neg, Sub, SubAssign},
+    ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign},
 };
 
 use num_traits::Float;
@@ -69,6 +69,17 @@ impl<T: Mul<Output = T> + Sub<Output = T> + Clone> Vec3<T> {
             z: self.x * rhs.y - self.y * rhs.x,
         }
     }
+    pub fn hadamard(self, rhs: Vec3<T>) -> Vec3<T> {
+        Self {
+            x: self.x * rhs.x,
+            y: self.y * rhs.y,
+            z: self.z * rhs.z,
+        }
+    }
+
+    pub fn components(self) -> (T, T, T) {
+        (self.x, self.y, self.z)
+    }
 }
 
 impl<T: AddAssign<Rhs>, Rhs> AddAssign<Vec3<Rhs>> for Vec3<T> {
@@ -126,12 +137,36 @@ impl<T: MulAssign<Rhs>, Rhs: Clone> MulAssign<Rhs> for Vec3<T> {
     }
 }
 
-impl<T: Mul<T, Output = T> + Add<T, Output = T>> Mul<Vec3<T>> for Vec3<T> {
-    type Output = T;
-    fn mul(self, rhs: Vec3<T>) -> Self::Output {
-        self.x * rhs.x + self.y * rhs.y + self.z * rhs.z
+impl<T: Div<Rhs, Output = O>, Rhs: Clone + VecElement, O> Div<Rhs> for Vec3<T> {
+    type Output = Vec3<O>;
+    fn div(self, rhs: Rhs) -> Self::Output {
+        Self::Output {
+            x: self.x / rhs.clone(),
+            y: self.y / rhs.clone(),
+            z: self.z / rhs,
+        }
     }
 }
+
+impl Mul<Vec3<f32>> for f32 {
+    type Output = Vec3<f32>;
+    fn mul(self, rhs: Vec3<f32>) -> Self::Output {
+        Self::Output {
+            x: self * rhs.x,
+            y: self * rhs.y,
+            z: self * rhs.z,
+        }
+    }
+}
+
+impl<T: DivAssign<Rhs>, Rhs: Clone> DivAssign<Rhs> for Vec3<T> {
+    fn div_assign(&mut self, rhs: Rhs) {
+        self.x /= rhs.clone();
+        self.y /= rhs.clone();
+        self.z /= rhs;
+    }
+}
+
 
 impl From<Vec3<f32>> for Vec3<i16> {
     fn from(value: Vec3<f32>) -> Self {
